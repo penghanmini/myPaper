@@ -14,7 +14,9 @@
       <el-tab-pane label="居家" name="2">
         <livingHome></livingHome>
       </el-tab-pane>
-      <el-tab-pane label="鞋包配饰" name="3">鞋包配饰</el-tab-pane>
+      <el-tab-pane label="鞋包配饰" name="3">
+        <shoeBag></shoeBag>
+      </el-tab-pane>
       <el-tab-pane label="服装" name="4">服装</el-tab-pane>
       <el-tab-pane label="电器" name="5">电器</el-tab-pane>
       <el-tab-pane label="洗护" name="6">洗护</el-tab-pane>
@@ -57,8 +59,9 @@
 <script>
   import headers from '@/components/header/headers'
   import headerSearch from '@/components/headerSearch/headerSearch'
-  import index from '@/pages/index/index'
-  import livingHome from '@/pages/livingHome/livingHome'
+  import index from './index/index'
+  import livingHome from './livingHome/livingHome'
+  import shoeBag from './shoeBag/shoeBag'
     export default {
         name: "layout",
         components: {
@@ -66,6 +69,7 @@
           headerSearch,
           index,
           livingHome,
+          shoeBag,
         },
         props: [],
         data() {

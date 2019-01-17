@@ -1,51 +1,54 @@
 /**
 * 作者: penghan
-* 日期: 2019-01-15
+* 日期: 2019-01-16
 * 描述:
 */
 <template>
-    <div class="livingHome">
-      <el-carousel :interval="5000" arrow="always" height="420">
-        <el-carousel-item v-for="(item,index) in carouselList" :key="index">
-          <img :src="item.src">
-        </el-carousel-item>
-      </el-carousel>
-      <div class="main">
-        <div class="main_1">
-          <div class="category">
-            <div class="subtitle">分类：</div>
+  <div class="livingHome">
+    <el-carousel :interval="5000" arrow="always" height="420">
+      <el-carousel-item v-for="(item,index) in carouselList" :key="index">
+        <img :src="item.src">
+      </el-carousel-item>
+    </el-carousel>
+    <div class="main">
+      <div class="main_1">
+        <div class="category">
+          <div class="subtitle">分类：</div>
+          <div>
             <span v-for="item in categoryList" :key="item.categoryId" :class="{'active': item.active}" @click="clickCategory(item)">{{item.label}}</span>
           </div>
-          <div class="address">
-            <div class="subtitle">配送地区：</div>
-            <span v-for="item in addressList" :key="item.id" :class="{'active': item.active}" @click="clickAddress(item)">{{item.name}}</span>
-          </div>
+
         </div>
-        <div class="main_2" v-for="data in mainData">
-          <div style="margin-bottom: 40px;">
-            <p style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">{{data.title}}</p>
-            <p>{{data.remark}}</p>
-          </div>
-          <div style="display: flex; flex-flow: wrap; justify-content: initial;">
-            <div class="oneGoods" v-for="item in data.goodsList">
-              <img :src="item.src">
-              <div style="margin-top: 15px; border-bottom: 1px solid #E4E7ED;">
-                <span class="newProject_text_1" :class="{'noNull': item.activeText}">{{item.activeText}}</span>
-                <p>{{item.remark}}</p>
-                <p><span style="color: #FF0000">{{item.newPrice}}</span><span class="delete">{{item.oldPrice}}</span></p>
-              </div>
-              <p style="color: #909399;">{{item.mean}}</p>
+        <div class="address">
+          <div class="subtitle">配送地区：</div>
+          <span v-for="item in addressList" :key="item.id" :class="{'active': item.active}" @click="clickAddress(item)">{{item.name}}</span>
+        </div>
+      </div>
+      <div class="main_2" v-for="data in mainData">
+        <div style="margin-bottom: 40px;">
+          <p style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">{{data.title}}</p>
+          <p>{{data.remark}}</p>
+        </div>
+        <div style="display: flex; flex-flow: wrap; justify-content: initial;">
+          <div class="oneGoods" v-for="item in data.goodsList">
+            <img :src="item.src">
+            <div style="margin-top: 15px; border-bottom: 1px solid #E4E7ED;">
+              <span class="newProject_text_1" :class="{'noNull': item.activeText}">{{item.activeText}}</span>
+              <p>{{item.remark}}</p>
+              <p><span style="color: #FF0000">{{item.newPrice}}</span><span class="delete">{{item.oldPrice}}</span></p>
             </div>
+            <p style="color: #909399;">{{item.mean}}</p>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
-  import livingHomeApi from '@/api/livingHomeApi'
+  import shoeBagApi from '@/api/shoeBagApi'
     export default {
-        name: "livingHome",
+        name: "ShoeBag",
         components: {},
         props: [],
         data() {
@@ -57,17 +60,20 @@
               ],
               categoryList:[
                 {label: '全部',active: true,categoryId: 1},
-                {label: '床品件套',active: false,categoryId: 2},
-                {label: '被枕',active: false,categoryId: 3},
-                {label: '家具',active: false,categoryId: 4},
-                {label: '灯具',active: false,categoryId: 5},
-                {label: '收纳',active: false,categoryId: 6},
-                {label: '布艺软装',active: false,categoryId: 7},
-                {label: '家饰',active: false,categoryId: 8},
-                {label: '旅行用品',active: false,categoryId: 9},
-                {label: '晾晒除味',active: false,categoryId: 10},
-                {label: '家庭医疗',active: false,categoryId: 11},
-                {label: '宠物',active: false,categoryId: 12},
+                {label: '行李箱',active: false,categoryId: 2},
+                {label: '女士包袋',active: false,categoryId: 3},
+                {label: '男士包袋',active: false,categoryId: 4},
+                {label: '钱包及小皮件',active: false,categoryId: 5},
+                {label: '女鞋',active: false,categoryId: 6},
+                {label: '男鞋',active: false,categoryId: 7},
+                {label: '拖鞋',active: false,categoryId: 8},
+                {label: '鞋配',active: false,categoryId: 9},
+                {label: '围巾件套',active: false,categoryId: 10},
+                {label: '袜子',active: false,categoryId: 11},
+                {label: '丝袜',active: false,categoryId: 12},
+                {label: '首饰',active: false,categoryId: 13},
+                {label: '配件',active: false,categoryId: 14},
+                {label: '眼镜',active: false,categoryId: 15},
               ],
               addressList:[
                 {name:'全部',active:true,id:1},
@@ -80,7 +86,7 @@
                 {name:'美洲',active:false,id:8},
               ],
               mainData: [
-                {title: '床品件套',remark: '甄选品质，睡眠美学',goodsList: [
+                {title: '行李箱',remark: '带着梦想即刻出发',goodsList: [
                     {
                       id:1,
                       src: 'https://yanxuan.nosdn.127.net/c74e2290b4cde2661affe43d52143b98.jpg?quality=95&thumbnail=245x245&imageView',
@@ -554,25 +560,14 @@
                     },
                   ]},
               ],
-              shili:{
-                id:2,
-                src: '',
-                activeType: 1,
-                activeText: '',
-                remark: '',
-                newPrice: '￥',
-                oldPrice: '',
-                mean:'',
-              },
             }
         },
         mounted() {
           this.getCarousel();
         },
         methods: {
-          //获取首页轮播图
           getCarousel(){
-            livingHomeApi.livingHomeCarousel().then(({data})=>{
+            shoeBagApi.shoeBagCarousel().then(({data})=>{
               this.carouselList = data.data;
             })
           },
@@ -621,10 +616,12 @@
           border-bottom: 1px dashed #E4E7ED;
           .subtitle{
             width: 70px;
+            line-height: 30px;
             color: #999;
           }
           span{
-            padding: 0 15px;
+            padding-right: 30px;
+            line-height: 30px;
             cursor: pointer;
             &:hover{
               color: #b4a078;

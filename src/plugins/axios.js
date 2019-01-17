@@ -1,14 +1,14 @@
 /**
- * 作者 ：食草狂魔
- *
- * 日期 ：2017/11/23
- *
- * 描述 ：Ajax请求类封装
+ * 作者: ph
+ * 日期: 2019-01-17
+ * 描述: Ajax请求类封装
  */
 import config from '../config'
 import $ajax from 'axios'
 
+
 function getOptions({ method, url, data, headers }) {
+
   let $ajaxOptions = {}
 
   if("string" != typeof method){
@@ -47,6 +47,7 @@ function getOptions({ method, url, data, headers }) {
   $ajaxOptions["url"] = url
   $ajaxOptions["baseURL"] = config.apis.defaultHost
   $ajaxOptions["headers"] = headers
+
   // $ajaxOptions["transformRequest"] = [function transformRequest (data, headers) {
   //   /* 这里是重点，其他的其实可以照着axios的源码抄 */
   //   /* 这里就是用来解决POST提交json数据的时候是直接把整个json放在request payload中提交过去的情况
@@ -60,7 +61,6 @@ function getOptions({ method, url, data, headers }) {
   //   }
   //   return data
   // }]
-
   return $ajaxOptions
 }
 
@@ -79,3 +79,5 @@ export default ({ method, url, data, headers = { "Content-Type" : "application/x
     throw new Error(`network exception ! \n ex:${ex.message} \n method:${method} \n url:${url} \n params:${JSON.stringify(params)}`)
   }
 }
+
+

@@ -7,7 +7,7 @@
     <div class="index">
       <el-carousel :interval="5000" arrow="always" height="420">
         <el-carousel-item v-for="(item,index) in carouselList" :key="index">
-          <img :src="item">
+          <img :src="item.src">
         </el-carousel-item>
       </el-carousel>
       <div class="main">
@@ -106,22 +106,14 @@
 </template>
 
 <script>
+  import indexApi from '@/api/indexApi'
     export default {
         name: "index",
         components: {},
         props: [],
         data() {
             return {
-              carouselList:[
-                'https://yanxuan.nosdn.127.net/92ef3b8c5a071205881fc3d2dd239a2e.jpg?imageView&quality=95&thumbnail=1920x420',
-                'https://yanxuan.nosdn.127.net/81d976a1372ba92e1df73c96e4a447e8.jpg?imageView&quality=95&thumbnail=1920x420',
-                'https://yanxuan.nosdn.127.net/ef9b42036d43e8fe0edbe4d722cbaa7b.jpg?imageView&quality=95&thumbnail=1920x420',
-                'https://yanxuan.nosdn.127.net/ece59ae8e8a70ded51a387055e19fcf0.jpg?imageView&quality=95&thumbnail=1920x420',
-                'https://yanxuan.nosdn.127.net/ece59ae8e8a70ded51a387055e19fcf0.jpg?imageView&quality=95&thumbnail=1920x420',
-                'https://yanxuan.nosdn.127.net/0c90345ede8cc7b4e959ae113f701d95.jpg?imageView&quality=95&thumbnail=1920x420',
-                'https://yanxuan.nosdn.127.net/d763efe3fe66123069fe0705b158de54.jpg?imageView&quality=95&thumbnail=1920x420',
-                'https://yanxuan.nosdn.127.net/f4766822f76274a3987466280d1c0d38.jpg?imageView&quality=95&thumbnail=1920x420',
-              ],
+              carouselList:[],
               marketList: [
                 'https://yanxuan.nosdn.127.net/15468656849650181.png',
                 'https://yanxuan.nosdn.127.net/15468657004320182.png',
@@ -146,9 +138,16 @@
             }
         },
         mounted() {
-
+          this.getCarousel()
         },
-        methods: {}
+        methods: {
+          //获取首页轮播图
+          getCarousel(){
+            indexApi.indexCarousel().then(({data})=>{
+              this.carouselList = data.data;
+            })
+          },
+        }
     }
 </script>
 
