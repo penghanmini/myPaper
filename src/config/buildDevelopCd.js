@@ -8,6 +8,10 @@ export default {
   apis:{
     modules:{
       //数据管理模块
+      layout:{
+        host: 'http://192.168.3.15:3000',
+        url: ''
+      },
       index:{
         host: 'http://192.168.3.15:3000',
         url: '/index'

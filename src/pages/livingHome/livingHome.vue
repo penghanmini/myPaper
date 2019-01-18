@@ -32,7 +32,7 @@
               <div style="margin-top: 15px; border-bottom: 1px solid #E4E7ED;">
                 <span class="newProject_text_1" :class="{'noNull': item.activeText}">{{item.activeText}}</span>
                 <p>{{item.remark}}</p>
-                <p><span style="color: #FF0000">{{item.newPrice}}</span><span class="delete">{{item.oldPrice}}</span></p>
+                <p><span style="color: #d7282d">{{item.newPrice}}</span><span class="delete">{{item.oldPrice}}</span></p>
               </div>
               <p style="color: #909399;">{{item.mean}}</p>
             </div>

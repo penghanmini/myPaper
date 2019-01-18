@@ -14,7 +14,7 @@
         <!--年货集市-->
         <div class="market">
           <img src="https://yanxuan.nosdn.127.net/15468656784950180.png"/>
-          <img class="market_img" v-for="(item,index) in marketList" :key="index" :src="item">
+          <img class="market_img" @click="handleMarket(item)" v-for="(item,index) in marketList" :key="index" :src="item.src">
         </div>
         <!--品牌制造商-->
         <div class="brandManufacturer">
@@ -114,37 +114,28 @@
         data() {
             return {
               carouselList:[],
-              marketList: [
-                'https://yanxuan.nosdn.127.net/15468656849650181.png',
-                'https://yanxuan.nosdn.127.net/15468657004320182.png',
-                'https://yanxuan.nosdn.127.net/15469338844231471.png',
-                'https://yanxuan.nosdn.127.net/15468657087870184.png',
-                'https://yanxuan.nosdn.127.net/15469338976701472.png',
-                'https://yanxuan.nosdn.127.net/15468657715450186.png',
-                'https://yanxuan.nosdn.127.net/15468657745740187.png',
-                'https://yanxuan.nosdn.127.net/15470888713462407.png',
-                'https://yanxuan.nosdn.127.net/15468658381750192.png',
-                'https://yanxuan.nosdn.127.net/15468658414510193.png',
-                'https://yanxuan.nosdn.127.net/15468658456620194.png',
-                'https://yanxuan.nosdn.127.net/15468658499210195.png',
-              ],
-              brandManufacturerList:[
-                'http://yanxuan.nosdn.127.net/802ff06dd3ef161db046eeb8db6cb4be.jpg',
-                'http://yanxuan.nosdn.127.net/c1e97be1b9730360c9c228b6a6448bca.png',
-                'http://yanxuan.nosdn.127.net/957c8d117473d103b52ff694f372a346.png',
-                'http://yanxuan.nosdn.127.net/574cea67f235598950acdbae4b5bdd5b.jpg',
-              ],
-
+              marketList: [],
             }
         },
         mounted() {
           this.getCarousel()
         },
         methods: {
-          //获取首页轮播图
+          //页面初始化
           getCarousel(){
+            //获取首页轮播图
             indexApi.indexCarousel().then(({data})=>{
               this.carouselList = data.data;
+            })
+            //首页集市
+            indexApi.indexMarket().then(({data})=>{
+              this.marketList = data.data
+            })
+          },
+          //点击集市图片
+          handleMarket(row){
+            this.$router.push({
+              path: "/" + row.belong,
             })
           },
         }
@@ -183,6 +174,7 @@
         .text_3{
           font-size: 14px;
           line-height: 40px;
+          cursor: pointer;
         }
       }
       .brandManufacturer{

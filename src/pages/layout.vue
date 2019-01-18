@@ -7,25 +7,8 @@
   <div class="panda">
     <headers></headers>
     <headerSearch></headerSearch>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="首页" name="1">
-        <index></index>
-      </el-tab-pane>
-      <el-tab-pane label="居家" name="2">
-        <livingHome></livingHome>
-      </el-tab-pane>
-      <el-tab-pane label="鞋包配饰" name="3">
-        <shoeBag></shoeBag>
-      </el-tab-pane>
-      <el-tab-pane label="服装" name="4">服装</el-tab-pane>
-      <el-tab-pane label="电器" name="5">电器</el-tab-pane>
-      <el-tab-pane label="洗护" name="6">洗护</el-tab-pane>
-      <el-tab-pane label="饮食" name="7">饮食</el-tab-pane>
-      <el-tab-pane label="餐厨" name="8">餐厨</el-tab-pane>
-      <el-tab-pane label="婴童" name="9">婴童</el-tab-pane>
-      <el-tab-pane label="文体" name="10">文体</el-tab-pane>
-      <el-tab-pane label="特色区" name="11">特色区</el-tab-pane>
-    </el-tabs>
+    <topBar :options="topBarOption"></topBar>
+    <router-view/>
     <div class="footer">
       <p class="text_1">
         <span>关于我们 |</span>
@@ -59,55 +42,91 @@
 <script>
   import headers from '@/components/header/headers'
   import headerSearch from '@/components/headerSearch/headerSearch'
-  import index from './index/index'
-  import livingHome from './livingHome/livingHome'
-  import shoeBag from './shoeBag/shoeBag'
+  import topBar from '@/components/TopBar/topBar'
     export default {
         name: "layout",
         components: {
           headers,
           headerSearch,
-          index,
-          livingHome,
-          shoeBag,
+          topBar
         },
         props: [],
         data() {
             return {
-              activeName: '1',
+              topBarOption: {
+                title: '左侧菜单数据配置',
+                data: [
+                  {
+                    show: true,
+                    label: '首页',
+                    frontUrl: '/index',
+                  },
+                  {
+                    show: true,
+                    label: '居家',
+                    frontUrl: '/livingHome',
+                  },
+                  {
+                    show: true,
+                    label: '鞋包配饰',
+                    frontUrl: '/shoeBag',
+                  },
+                  {
+                    show: true,
+                    label: '服装',
+                    frontUrl: '/cloth',
+                  },
+                  {
+                    show: true,
+                    label: '电器',
+                    frontUrl: '/electric',
+                  },
+                  {
+                    show: true,
+                    label: '洗护',
+                    frontUrl: '/personalCare',
+                  },
+                  {
+                    show: true,
+                    label: '饮食',
+                    frontUrl: '/diet',
+                  },
+                  {
+                    show: true,
+                    label: '餐厨',
+                    frontUrl: '/kitchen',
+                  },
+                  {
+                    show: true,
+                    label: '婴童',
+                    frontUrl: '/baby',
+                  },
+                  {
+                    show: true,
+                    label: '文体',
+                    frontUrl: '/literaryForm',
+                  },
+                  {
+                    show: true,
+                    label: '特色区',
+                    frontUrl: '/special',
+                  },
+                ],
+              },
             }
         },
         mounted() {
 
         },
         methods: {
-          handleClick(tab,event){
 
-          },
         }
     }
 </script>
 
 <style scoped lang='less'>
   .panda{
-    /deep/.el-tabs__header{
-      padding: 0 400px;
-    }
-    /deep/.el-tabs__item{
-      font-weight: bold;
-    }
-    /deep/.el-tabs__nav-wrap::after{
-      background-color: #fff;
-    }
-    /deep/.el-tabs__active-bar{
-      background-color: #b4a078;
-    }
-    /deep/.el-tabs__item.is-active{
-      color: #b4a078;
-    }
-    /deep/.el-tabs__item:hover{
-      color: #b4a078;
-    }
+
     .footer{
       background-color: #303133;
       height: 150px;
