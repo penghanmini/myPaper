@@ -14,11 +14,11 @@
         <div class="main_1">
           <div class="category">
             <div class="subtitle">分类：</div>
-            <span v-for="item in categoryList" :key="item.categoryId" :class="{'active': item.active}" @click="clickCategory(item)">{{item.label}}</span>
+            <span v-for="item in categoryList" :key="item.categoryId" :class="{'active': item.active}" @click="clickCategory(item)">{{item.name}}</span>
           </div>
           <div class="address">
             <div class="subtitle">配送地区：</div>
-            <span v-for="item in addressList" :key="item.id" :class="{'active': item.active}" @click="clickAddress(item)">{{item.name}}</span>
+            <span v-for="item in addressList" :key="item.id" :class="{'active': item.active}" @click="clickAddress(item)">{{item.addressCnName}}</span>
           </div>
         </div>
         <div class="main_2" v-for="data in mainData">
@@ -43,42 +43,18 @@
 </template>
 
 <script>
+  import layoutApi from '@/api/layoutApi'
   import livingHomeApi from '@/api/livingHomeApi'
+  import category from "../../router/category/category";
     export default {
         name: "livingHome",
         components: {},
         props: [],
         data() {
             return {
-              carouselList: [
-                'https://yanxuan.nosdn.127.net/874de1f81d910dd5efee2817babc7977.jpg?imageView&quality=95&thumbnail=1090x310',
-                'https://yanxuan.nosdn.127.net/c85b03119e81390003edbd0dddf485cd.jpg?imageView&quality=95&thumbnail=1090x310',
-                'https://yanxuan.nosdn.127.net/eea03529f52942c111107af728a771ec.jpg?imageView&quality=95&thumbnail=1090x310',
-              ],
-              categoryList:[
-                {label: '全部',active: true,categoryId: 1},
-                {label: '床品件套',active: false,categoryId: 2},
-                {label: '被枕',active: false,categoryId: 3},
-                {label: '家具',active: false,categoryId: 4},
-                {label: '灯具',active: false,categoryId: 5},
-                {label: '收纳',active: false,categoryId: 6},
-                {label: '布艺软装',active: false,categoryId: 7},
-                {label: '家饰',active: false,categoryId: 8},
-                {label: '旅行用品',active: false,categoryId: 9},
-                {label: '晾晒除味',active: false,categoryId: 10},
-                {label: '家庭医疗',active: false,categoryId: 11},
-                {label: '宠物',active: false,categoryId: 12},
-              ],
-              addressList:[
-                {name:'全部',active:true,id:1},
-                {name:'香港',active:false,id:2},
-                {name:'澳门',active:false,id:3},
-                {name:'台湾',active:false,id:4},
-                {name:'日韩',active:false,id:5},
-                {name:'亚洲',active:false,id:6},
-                {name:'欧洲',active:false,id:7},
-                {name:'美洲',active:false,id:8},
-              ],
+              carouselList: [],
+              categoryList:[],
+              addressList:[],
               mainData: [
                 {title: '床品件套',remark: '甄选品质，睡眠美学',goodsList: [
                     {
@@ -567,13 +543,45 @@
             }
         },
         mounted() {
-          this.getCarousel();
+          this.initData();
         },
         methods: {
-          //获取首页轮播图
-          getCarousel(){
-            livingHomeApi.livingHomeCarousel().then(({data})=>{
-              this.carouselList = data.data;
+          //初始化页面
+          initData(){
+            let vm = this;
+            //轮播图
+            layoutApi.carousel({
+              carouselType: 2
+            }).then(({data})=>{
+              vm.carouselList = data.data;
+            })
+            //分类
+            layoutApi.getCategory({
+              category: 'category_1',
+            }).then(({data})=>{
+              data.data.forEach((v)=>{
+                v.active = false;
+              })
+              data.data.unshift({
+                category: 'category_1',
+                name: '全部',
+                secondCate: 0,
+                active: true,
+              })
+              vm.categoryList = data.data;
+            })
+            //配送地区
+            layoutApi.address().then(({data})=>{
+              data.data.forEach((v)=>{
+                v.active = false
+              })
+              data.data.unshift({
+                addressCnName: "全部",
+                category: "0",
+                active: true,
+                id: 0
+              })
+              vm.addressList = data.data;
             })
           },
           clickCategory(row){

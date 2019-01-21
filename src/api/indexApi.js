@@ -17,6 +17,11 @@ const module = {
     method: "get", // 请求方式
     name: "indexMarket", // 接口名称
     url: "/market" // 接口全路径
+  },{
+    // 首页新品首发
+    method: "get", // 请求方式
+    name: "indexNewProject", // 接口名称
+    url: "/newProject" // 接口全路径
   },]
 };
 

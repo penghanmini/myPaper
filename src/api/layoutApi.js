@@ -8,10 +8,20 @@ import apiFactory from "./apiFactory";
 const module = {
   moduleName: "layout",
   apis: [{
-    // 首页走马灯
+    // 收货地址查询
     method: "get", // 请求方式
-    name: "layoutCategory", // 接口名称
-    url: "/category" // 接口全路径
+    name: "address", // 接口名称
+    url: "/address" // 接口全路径
+  },{
+    // 走马灯
+    method: "get", // 请求方式
+    name: "carousel", // 接口名称
+    url: "/carousel" // 接口全路径
+  },{
+    // 分类
+    method: "get", // 请求方式
+    name: "getCategory", // 接口名称
+    url: "/categoryList" // 接口全路径
   },]
 };
 

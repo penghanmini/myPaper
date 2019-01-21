@@ -24,6 +24,38 @@ export default {
         host:"http://192.168.3.15:3000",
         url:"/shoeBag"
       },
+      cloth:{
+        host:"http://192.168.3.15:3000",
+        url:"/cloth"
+      },
+      electric:{
+        host:"http://192.168.3.15:3000",
+        url:"/electric"
+      },
+      personalCare:{
+        host:"http://192.168.3.15:3000",
+        url:"/personalCare"
+      },
+      diet:{
+        host:"http://192.168.3.15:3000",
+        url:"/diet"
+      },
+      kitchen:{
+        host:"http://192.168.3.15:3000",
+        url:"/kitchen"
+      },
+      baby:{
+        host:"http://192.168.3.15:3000",
+        url:"/baby"
+      },
+      literaryForm:{
+        host:"http://192.168.3.15:3000",
+        url:"/literaryForm"
+      },
+      special:{
+        host:"http://192.168.3.15:3000",
+        url:"/special"
+      },
 
     },
     // defaultHost: 'http://www.youedata.com',//'http://192.168.112.3:8089',//'',//'http://210.13.50.98:10133', //http://www.youedata.com/portalInterface/goods/category

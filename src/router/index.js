@@ -8,12 +8,11 @@ const Layout = r => require.ensure([],() => r(require('@/pages/layout.vue')),'La
 const router= new Router({
   routes: [
     {
-      path: '/index',
+      path: '/',
       name: 'Layout',
       component: Layout,
       children:[
         ...Category,
-
       ],
     },
   ]

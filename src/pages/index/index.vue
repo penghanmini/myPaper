@@ -23,17 +23,17 @@
               <span class="text_1">品牌制造商</span>
               <span class="text_2">工厂直达消费者，剔除品牌溢价</span>
             </p>
-            <p class="text_3">更多制造商></p>
+            <p class="text_3" @click="toBrand">更多制造商></p>
           </div>
           <div class="moreImg">
-            <div class="brand_text">
+            <div class="brand_text" @click="toBrand">
               <div style="position: absolute; top: 10px; left: 130px;">
                 <p class="brand_text_1">海外制造商</p>
                 <p>9.9元起</p>
               </div>
               <img src="http://yanxuan.nosdn.127.net/802ff06dd3ef161db046eeb8db6cb4be.jpg">
             </div>
-            <div class="brand_text">
+            <div class="brand_text" @click="toBrand">
               <div style="position: absolute; top: 10px; left: 130px;">
                 <p class="brand_text_1">CK制造商</p>
                 <p class="brand_text_2">25元起</p>
@@ -41,14 +41,14 @@
               <img style="margin: 10px 10px 0 10px;" src="http://yanxuan.nosdn.127.net/c1e97be1b9730360c9c228b6a6448bca.png">
             </div>
             <div style="display: flex;flex-flow: nowrap column;">
-              <div class="brand_text">
+              <div class="brand_text" @click="toBrand">
                 <div style="position: absolute; top: 10px; left: 15px;">
                   <p class="brand_text_1">新秀丽制造商</p>
                   <p class="brand_text_2">34.9元起</p>
                 </div>
                 <img src="http://yanxuan.nosdn.127.net/957c8d117473d103b52ff694f372a346.png">
               </div>
-              <div class="brand_text">
+              <div class="brand_text" @click="toBrand">
                 <div style="position: absolute; top: 10px; left: 15px;">
                   <p class="brand_text_1">MUJI制造商</p>
                   <p class="brand_text_2">35元起</p>
@@ -64,40 +64,19 @@
               <span class="text_1">新品首发</span>
               <span class="text_2">为你寻觅世间好物</span>
             </p>
-            <p class="text_3">更多新品></p>
+            <p class="text_3" @click="toNewProduct">更多新品></p>
           </div>
-          <div style="display: flex;flex-flow: nowrap row; justify-content: center;">
-            <div class="oneProject">
-              <img src="https://yanxuan.nosdn.127.net/79dce49ffebf3b0fda025adcf802b80d.png?quality=95&thumbnail=265x265&imageView">
-              <div>
-                <span class="newProject_text_1">年货节特卖</span>
-                <p>祺宴 糕饼礼盒 1.15千克</p>
-                <p><span>￥149 </span><span class="delete">￥198</span></p>
+          <div style="display: flex; flex-flow: wrap; justify-content: initial;padding: 20px 400px 50px 400px;">
+            <div class="oneGoods" v-for="item in newProjectList"  @click="toNewProduct">
+              <img :src="item.samllimg">
+              <div style="margin-top: 15px; border-bottom: 1px solid #E4E7ED;">
+                <span class="newProject_text_1" :class="{'noNull': item.activeText}">{{item.activeText}}</span>
+                <p>{{item.name}}</p>
+                <p><span style="color: #d7282d">{{item.newPrice}}</span><span class="delete">{{item.oldPrice}}</span></p>
               </div>
-            </div>
-            <div class="oneProject">
-              <img src="https://yanxuan.nosdn.127.net/f25b1102215f6b22e833665bef22157f.png?quality=95&thumbnail=265x265&imageView">
-              <div>
-                <span  class="newProject_text_1">年货节特卖</span>
-                <p>祺宴 坚果礼盒 840克</p>
-                <p><span>￥225 </span><span class="delete">￥298</span></p>
-              </div>
-            </div>
-            <div class="oneProject">
-              <img src="https://yanxuan.nosdn.127.net/d0125f6c41beb964722a96bcc93c9c59.jpg?quality=95&thumbnail=265x265&imageView&quality=95&thumbnail=265x265&imageView">
-              <div>
-                <span  class="newProject_text_1">吃货福利</span>
-                <p>茅台王子酒 金王子53° 500毫升</p>
-                <p><span>￥218 </span><span class="delete">￥388</span></p>
-              </div>
-            </div>
-            <div class="oneProject">
-              <img src="https://yanxuan.nosdn.127.net/a695a85621b21d2842435fe485b80f6b.jpg?quality=95&thumbnail=265x265&imageView&quality=95&thumbnail=265x265&imageView">
-              <div>
-                <span  class="newProject_text_1">满减</span>
-                <p>西班牙制造 高浓VC保湿抗皱安瓶</p>
-                <p><span>￥289 | </span><span style="color: #909399;"> 海外制造商</span></p>
-              </div>
+              <p style="color: #909399;" v-if="item.remark && item.remark.length<=15">{{item.remark}}</p>
+              <p style="color: #909399;" v-if="!item.remark">{{item.remark}}</p>
+              <p style="color: #909399;" v-else-if="item.remark && item.remark.length>15">{{item.remark.substr(0,15)+"..."}}</p>
             </div>
           </div>
         </div>
@@ -106,6 +85,7 @@
 </template>
 
 <script>
+  import layoutApi from '@/api/layoutApi'
   import indexApi from '@/api/indexApi'
     export default {
         name: "index",
@@ -115,6 +95,7 @@
             return {
               carouselList:[],
               marketList: [],
+              newProjectList: [],
             }
         },
         mounted() {
@@ -124,12 +105,18 @@
           //页面初始化
           getCarousel(){
             //获取首页轮播图
-            indexApi.indexCarousel().then(({data})=>{
+            layoutApi.carousel({
+              carouselType: 1
+            }).then(({data})=>{
               this.carouselList = data.data;
             })
             //首页集市
             indexApi.indexMarket().then(({data})=>{
               this.marketList = data.data
+            })
+            //新品首发
+            indexApi.indexNewProject().then(({data})=>{
+              this.newProjectList = data.data;
             })
           },
           //点击集市图片
@@ -138,7 +125,19 @@
               path: "/" + row.belong,
             })
           },
-        }
+          //进入品牌制造商
+          toBrand(){
+            this.$router.push({
+              path: "/brandManufacturer",
+            })
+          },
+          //进入新品页面
+          toNewProduct(){
+            this.$router.push({
+              path: "/newProduct",
+            })
+          }
+        },
     }
 </script>
 
@@ -201,28 +200,27 @@
       }
       .newProject{
         padding-bottom: 50px;
-        .oneProject{
+        .oneGoods{
           display: flex;
           flex-flow: nowrap column;
           justify-content: center;
-          margin-left: 10px;
+          margin-right: 10px;
           font-size: 14px;
           &:hover{
             background-color: #F5F5F5;
             transform: scale(1.01);
           }
-          div{
-            margin-top: 15px;
+          img{
+            width: 265px;
+            height: 265px;
           }
           .newProject_text_1{
             background-color: #FF6347;
             color: #fff;
-            padding: 2px 5px;
             margin: 10px 80px;
           }
-          .delete{
-            text-decoration:line-through;
-            color: #909399;
+          .noNull{
+            padding: 2px 5px;
           }
         }
       }

@@ -32,7 +32,6 @@
         props: ['options'],
         data() {
             return {
-              activeName: this.options.data[0].frontUrl.toString(),
               categoryList: [],
             }
         },

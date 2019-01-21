@@ -59,7 +59,7 @@
                   {
                     show: true,
                     label: '首页',
-                    frontUrl: '/index',
+                    frontUrl: '/',
                   },
                   {
                     show: true,
