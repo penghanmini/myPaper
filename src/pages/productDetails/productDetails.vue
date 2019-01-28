@@ -48,18 +48,73 @@
 
             </div>
           </div>
+          <div class="proDetail">
+            <span>数量</span>
+            <el-input-number v-model="number" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+          </div>
+          <div class="moreBtn">
+            <el-button class="newShop">立即购买</el-button>
+            <el-button class="addShopCar">加入购物车</el-button>
+            <el-button class="collect"><i class="el-icon-star-off" style="margin-right: 5px;"></i>收藏</el-button>
+          </div>
         </div>
+      </div>
+      <div class="moreInfo">
+        <el-tabs type="border-card" v-model="activeName" @tab-click="tabsChange" class="tabs">
+          <el-tab-pane label="详情" name="detail">
+            <template>
+              <div class="detailText">
+                <div style="width: 80px;">产地：</div>
+                <div>熊猫基地</div>
+              </div>
+              <div class="detailText">
+                <div style="width: 80px;">规格：</div>
+                <div>通用规格</div>
+              </div>
+              <div class="detailText">
+                <div style="width: 80px;">维护方式：</div>
+                <div>自由维护</div>
+              </div>
+              <div class="detailText">
+                <div style="width: 80px;">材料：</div>
+                <div>原材料</div>
+              </div>
+              <div class="detailText">
+                <div style="width: 80px;">生产商家：</div>
+                <div>熊猫家</div>
+              </div>
+              <div class="detailText">
+                <div style="width: 80px;">相关认证：</div>
+                <div>
+                  Ökotex Standed 100 class1 国际环保纺织品认证等级一级<br/>
+                  Nomite REG1006 防敏防螨认证<br/>
+                  Downafresh greenline REG1006 欧洲羽绒羽毛清洁认证<br/>
+                  SGS 国标纺织品认证
+                </div>
+              </div>
+            </template>
+          </el-tab-pane>
+          <el-tab-pane label="评价" name="evaluate">
+
+          </el-tab-pane>
+          <el-tab-pane label="质检报告" name="qualityReport">
+
+          </el-tab-pane>
+          <el-tab-pane label="常见问题" name="FAQ">
+
+          </el-tab-pane>
+        </el-tabs>
       </div>
       <Dialog :options="serveOption">
         <template slot="dialogContent" class="dialog">
           <p style="color: #b4a078; font-size: 18px;">･ 不支持30天无忧退换货 </p>
-          <p class="dialogSubTitle">食品、贴身衣物、积分兑换等特殊商品，无质量问题不支持退换货。</p>
+          <div>食品、贴身衣物、积分兑换等特殊商品，无质量问题不支持退换货。</div>
           <p style="color: #b4a078; font-size: 18px;">･ 48小时快速退款</p>
-          <p class="dialogSubTitle">收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账。</p>
+          <div>收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账。</div>
           <p style="color: #b4a078; font-size: 18px;">･ 满88元免邮费</p>
-          <p class="dialogSubTitle">单笔订单金额（不含运费），大陆地区满88元免邮，不满88元收取10元邮费；港澳台地区满500元免邮，不满500元收取30元运费；海外地区以下单页提示运费为准。</p>
+          <div>单笔订单金额（不含运费），大陆地区满88元免邮，不满88元收取10元邮费；港澳台地区满500元免邮，不满500元收取30元运费；海外地区以下单页提示运费为准。</div>
           <p style="color: #b4a078; font-size: 18px;">･ 网易自营品牌</p>
-          <p class="dialogSubTitle">网易原创生活类电商品牌，所有商品均为网易自营，品质保证。</p>
+          <div>网易原创生活类电商品牌，所有商品均为网易自营，品质保证。</div>
         </template>
       </Dialog>
     </div>
@@ -80,7 +135,9 @@
                 title: '服务',
                 visible: false,
                 width: '30%',
-              }
+              },
+              number: '',//商品数量
+              activeName: 'detail',//下部tabs绑定值
             }
         },
         mounted() {
@@ -90,12 +147,21 @@
           service(){
             this.serveOption.visible = true;
           },
+          //选择商品数量
+          handleChange(val){
+            console.log(val);
+          },
+          //tabs选择
+          tabsChange(tabs,path){
+            console.log(tabs);
+          },
         }
     }
 </script>
 
 <style scoped lang='less'>
   .productDetail{
+    border-top: 1px solid #F2F6FC;
     padding: 20px 400px;
     .main{
       display: flex;
@@ -166,17 +232,75 @@
             margin: 0px 80px;
           }
         }
+        .proDetail{
+          margin-top: 30px;
+          font-size: 12px;
+          color: #666;
+          span{
+            padding: 0 40px 0 10px;
+          }
+        }
+        .moreBtn{
+          margin-top: 30px;
+          .newShop{
+            height: 50px;
+            width: 170px;
+            color: #b4a078;
+            border: 1px solid #b4a078;
+            background-color: #f5f3ef;
+          }
+          .addShopCar{
+            height: 50px;
+            width: 170px;
+            color: #fff;
+            border: 1px solid #b4a078;
+            background-color: #b4a078;
+          }
+          .collect{
+            height: 50px;
+            width: 120px;
+            border: 1px solid #CCC;
+            color: #999;
+          }
+        }
+      }
+    }
+    .moreInfo{
+      margin-top: 50px;
+      .tabs{
+        width: 90%;
+        min-height: 500px;
+        margin-right: 10px;
+        /deep/.el-tabs__item{
+          width: 100px;
+          background-color: #f5f5f5;
+          &:hover{
+            color: #b4a078;
+          }
+        }
+        /deep/.el-tabs__item.is-active{
+          color: #b4a078;
+          background-color: #fff;
+        }
+      }
+      .detailText{
+        color: #999;
+        width: 100%;
+        padding-left: 10px;
+        font-size: 14px;
+        min-height: 80px;
+        text-align: left;
+        display: flex;
+        flex-flow: nowrap row;
+        align-items: center;
+        justify-content: left;
+        border-bottom: 1px dashed #e8e8e8;
       }
     }
     .dialog{
       .dialogTitle{
         color: #b4a078;
         font-size: 18px;
-      }
-      .dialogSubTitle{
-        color: #909399;
-        font-size: 14px;
-        padding-left: 20px;
       }
     }
   }

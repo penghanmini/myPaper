@@ -67,7 +67,7 @@
             <p class="text_3" @click="toNewProduct">更多新品></p>
           </div>
           <div style="display: flex; flex-flow: wrap; justify-content: initial;padding: 20px 400px 50px 400px;">
-            <div class="oneGoods" v-for="item in newProjectList"  @click="toNewProduct">
+            <div class="oneGoods" v-for="item in newProjectList"  @click="toProductDetails(item)">
               <img :src="item.samllimg">
               <div style="margin-top: 15px; border-bottom: 1px solid #E4E7ED;">
                 <span class="newProject_text_1" :class="{'noNull': item.activeText}">{{item.activeText}}</span>
@@ -135,6 +135,11 @@
           toNewProduct(){
             this.$router.push({
               path: "/newProduct",
+            })
+          },
+          toProductDetails(){
+            this.$router.push({
+              path: "/productDetails",
             })
           }
         },
