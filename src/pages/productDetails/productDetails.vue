@@ -8,21 +8,21 @@
       <div class="main">
         <div class="left">
           <el-carousel>
-            <el-carousel-item v-for="item in 4" :key="item">
-              <h3>{{ item }}</h3>
+            <el-carousel-item interval=6000 v-for="(item,index) in imgList" :key="index">
+              <img :src="item.src" alt="">
             </el-carousel-item>
           </el-carousel>
         </div>
         <div class="right">
-          <p class="title">祺宴 糕饼礼盒 1.15千克</p>
-          <p class="subtitle">严选9款精致糕饼，盛情礼赠，节节“糕”升</p>
+          <p class="title">{{proDetail.name}}</p>
+          <p class="subtitle">{{proDetail.remark}}</p>
           <div class="detail">
             <div class="divFlex">
               <div class="text_left">活动价</div>
               <div>
-                <span class="text_newPrice">￥149</span>
-                <span class="text_oldPrice">￥198</span>
-                <span class="activeText">年货节特卖</span>
+                <span class="text_newPrice">{{proDetail.newprice}}</span>
+                <span class="text_oldPrice">{{proDetail.oldprice}}</span>
+                <span class="activeText">{{proDetail.activeText}}</span>
               </div>
             </div>
             <div class="divFlex">
@@ -32,10 +32,15 @@
                 <el-select
                   v-model="address"
                   size="small"
-                  placeholder="请选择地址"
-                ></el-select>
+                  placeholder="请选择地址">
+                  <el-option
+                    v-for="item in addressList"
+                    :key="item.id"
+                    :label="item.addressCnName"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
               </div>
-
             </div>
             <div class="divFlex_1">
               <div class="text_left">服务</div>
@@ -122,6 +127,7 @@
 
 <script>
   import Dialog from '@/components/dialog/Dialog'
+  import layoutApi from '@/api/layoutApi'
     export default {
         name: "productDetails",
         components: {
@@ -130,7 +136,10 @@
         props: [],
         data() {
             return {
+              proDetail: '',
+              imgList:[],
               address:'',
+              addressList:[],
               serveOption: {
                 title: '服务',
                 visible: false,
@@ -141,7 +150,15 @@
             }
         },
         mounted() {
-
+          layoutApi.productDetail({
+            id: this.$route.query.id,
+          }).then(({data})=>{
+            this.proDetail = data.data.data;
+            this.imgList = data.data.imgUrl;
+          })
+          layoutApi.address().then(({data})=>{
+            this.addressList = data.data;
+          })
         },
         methods: {
           service(){
@@ -170,6 +187,9 @@
         width: 430px;
         height: 430px;
         border: 1px solid #F2F6FC;
+        /deep/.el-carousel__container{
+          height: 430px;
+        }
       }
       .right{
         width: 500px;

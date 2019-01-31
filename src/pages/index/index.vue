@@ -137,9 +137,12 @@
               path: "/newProduct",
             })
           },
-          toProductDetails(){
+          toProductDetails(row){
             this.$router.push({
               path: "/productDetails",
+              query:{
+                id: row.id,
+              }
             })
           }
         },

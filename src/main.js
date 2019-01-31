@@ -7,7 +7,6 @@ import axios from 'axios'
 import Echarts from 'echarts'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
 import $ from 'jquery'
 
 Vue.config.productionTip = false
@@ -26,4 +25,9 @@ new Vue({
   router,
   components: { App },
   template: '<App/>'
+})
+
+// 跳转后返回顶部
+router.afterEach((to,from,next) => {
+  window.scrollTo(0,0);
 })

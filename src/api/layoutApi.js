@@ -22,6 +22,11 @@ const module = {
     method: "get", // 请求方式
     name: "getCategory", // 接口名称
     url: "/categoryList" // 接口全路径
+  },{
+    // 商品详情
+    method: "get", // 请求方式
+    name: "productDetail", // 接口名称
+    url: "/productDetail" // 接口全路径
   },]
 };
 

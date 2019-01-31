@@ -9,51 +9,51 @@ export default {
     modules:{
       //数据管理模块
       layout:{
-        host: 'http://192.168.3.15:3000',
+        host: 'http://localhost:3000',
         url: ''
       },
       index:{
-        host: 'http://192.168.3.15:3000',
+        host: 'http://localhost:3000',
         url: '/index'
       },
       livingHome:{
-        host: 'http://192.168.3.15:3000',
+        host: 'http://localhost:3000',
         url: '/livingHome'
       },
       shoeBag:{
-        host:"http://192.168.3.15:3000",
+        host:"http://localhost:3000",
         url:"/shoeBag"
       },
       cloth:{
-        host:"http://192.168.3.15:3000",
+        host:"http://localhost:3000",
         url:"/cloth"
       },
       electric:{
-        host:"http://192.168.3.15:3000",
+        host:"http://localhost:3000",
         url:"/electric"
       },
       personalCare:{
-        host:"http://192.168.3.15:3000",
+        host:"http://localhost:3000",
         url:"/personalCare"
       },
       diet:{
-        host:"http://192.168.3.15:3000",
+        host:"http://localhost:3000",
         url:"/diet"
       },
       kitchen:{
-        host:"http://192.168.3.15:3000",
+        host:"http://localhost:3000",
         url:"/kitchen"
       },
       baby:{
-        host:"http://192.168.3.15:3000",
+        host:"http://localhost:3000",
         url:"/baby"
       },
       literaryForm:{
-        host:"http://192.168.3.15:3000",
+        host:"http://localhost:3000",
         url:"/literaryForm"
       },
       special:{
-        host:"http://192.168.3.15:3000",
+        host:"http://localhost:3000",
         url:"/special"
       },
 

@@ -27,14 +27,15 @@
             <p>{{data.remark}}</p>
           </div>
           <div style="display: flex; flex-flow: wrap; justify-content: initial;">
-            <div class="oneGoods" v-for="item in data.goodsList">
-              <img :src="item.src">
+            <div class="oneGoods" v-for="item in data.goodsList" :key="item.id" @click="toProductDetail(item)">
+              <img style="height: 245px; width: 245px;" :src="item.samllimg">
               <div style="margin-top: 15px; border-bottom: 1px solid #E4E7ED;">
                 <span class="newProject_text_1" :class="{'noNull': item.activeText}">{{item.activeText}}</span>
-                <p>{{item.remark}}</p>
-                <p><span style="color: #d7282d">{{item.newPrice}}</span><span class="delete">{{item.oldPrice}}</span></p>
+                <p>{{item.name}}</p>
+                <p><span style="color: #d7282d">{{item.newprice}}</span><span class="delete">{{item.oldprice}}</span></p>
               </div>
-              <p style="color: #909399;">{{item.mean}}</p>
+              <p v-if="item.remark && item.remark.length<=15" style="color: #909399;">{{item.remark}}</p>
+              <p v-if="item.remark && item.remark.length>15" style="color: #909399;">{{item.remark.substr(0,15) + '...'}}</p>
             </div>
           </div>
         </div>
@@ -45,7 +46,6 @@
 <script>
   import layoutApi from '@/api/layoutApi'
   import livingHomeApi from '@/api/livingHomeApi'
-  import category from "../../router/category/category";
     export default {
         name: "livingHome",
         components: {},
@@ -57,7 +57,7 @@
               addressList:[],
               mainData: [
                 {title: '床品件套',remark: '甄选品质，睡眠美学',goodsList: []},
-                {title: '被枕',remark: '陷入柔暖，美梦时刻',goodsList: []},
+                {title: '被枕垫褥',remark: '陷入柔暖，美梦时刻',goodsList: []},
                 {title: '家具',remark: '品质家具，质感生活',goodsList: []},
                 {title: '灯具',remark: '一盏灯，温暖一个家',goodsList: []},
                 {title: '收纳',remark: '收纳神器大集结',goodsList: []},
@@ -72,6 +72,7 @@
         },
         mounted() {
           this.initData();
+          this.getGoodsList();
         },
         methods: {
           //初始化页面
@@ -112,6 +113,18 @@
               vm.addressList = data.data;
             })
           },
+          //获取二级分类
+          getGoodsList(){
+            let vm = this;
+            for(let i=0;i<vm.mainData.length;i++){
+              livingHomeApi.goodsList({
+                type: i+1,
+              }).then(({data})=>{
+                vm.mainData[i].goodsList=data.data;
+              })
+            }
+          },
+          //选择一级分类
           clickCategory(row){
             let vm = this
             if(row.active){return false;}
@@ -122,6 +135,7 @@
               row.active = true;
             }
           },
+          //选择收货地址
           clickAddress(row){
             let vm = this
             if(row.active){return false;}
@@ -131,6 +145,15 @@
               })
               row.active = true;
             }
+          },
+          //点击商品进入详情页
+          toProductDetail(row){
+            this.$router.push({
+              path: "/productDetails",
+              query:{
+                id: row.id,
+              }
+            })
           },
         }
     }

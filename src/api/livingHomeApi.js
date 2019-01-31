@@ -8,15 +8,10 @@ import apiFactory from "./apiFactory";
 const module = {
   moduleName: "livingHome",
   apis: [{
-    // 居家走马灯
+    // 居家床品件套
     method: "get", // 请求方式
-    name: "livingHomeCarousel", // 接口名称
-    url: "/carousel" // 接口全路径
-  },{
-    // 居家分类
-    method: "get", // 请求方式
-    name: "livingHomeCategory", // 接口名称
-    url: "/category" // 接口全路径
+    name: "goodsList", // 接口名称
+    url: "/goodsList" // 接口全路径
   },]
 };
 
