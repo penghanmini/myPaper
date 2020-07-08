@@ -72,7 +72,7 @@
               <div style="margin-top: 15px; border-bottom: 1px solid #E4E7ED;">
                 <span class="newProject_text_1" :class="{'noNull': item.activeText}">{{item.activeText}}</span>
                 <p>{{item.name}}</p>
-                <p><span style="color: #d7282d">{{item.newPrice}}</span><span class="delete">{{item.oldPrice}}</span></p>
+                <p><span style="color: #d7282d">{{item.newPrice}}</span><span style="text-decoration: line-through;">{{item.oldPrice}}</span></p>
               </div>
               <p style="color: #909399;" v-if="item.remark && item.remark.length<=15">{{item.remark}}</p>
               <p style="color: #909399;" v-if="!item.remark">{{item.remark}}</p>

@@ -32,7 +32,7 @@
               <div style="margin-top: 15px; border-bottom: 1px solid #E4E7ED;">
                 <span class="newProject_text_1" :class="{'noNull': item.activeText}">{{item.activeText}}</span>
                 <p>{{item.name}}</p>
-                <p><span style="color: #d7282d">{{item.newprice}}</span><span class="delete">{{item.oldprice}}</span></p>
+                <p><span style="color: #d7282d">{{item.newprice}}</span><span style="text-decoration: line-through;">{{item.oldprice}}</span></p>
               </div>
               <p v-if="item.remark && item.remark.length<=15" style="color: #909399;">{{item.remark}}</p>
               <p v-if="item.remark && item.remark.length>15" style="color: #909399;">{{item.remark.substr(0,15) + '...'}}</p>

@@ -37,7 +37,7 @@
                     v-for="item in addressList"
                     :key="item.id"
                     :label="item.addressCnName"
-                    :value="item.id">
+                    :value="item.addressCnName">
                   </el-option>
                 </el-select>
               </div>
@@ -58,7 +58,7 @@
             <el-input-number v-model="number" @change="handleChange" :min="1" label="描述文字"></el-input-number>
           </div>
           <div class="moreBtn">
-            <el-button class="newShop">立即购买</el-button>
+            <el-button class="newShop" @click="shoppingNow">立即购买</el-button>
             <el-button class="addShopCar">加入购物车</el-button>
             <el-button class="collect"><i class="el-icon-star-off" style="margin-right: 5px;"></i>收藏</el-button>
           </div>
@@ -122,16 +122,37 @@
           <div>网易原创生活类电商品牌，所有商品均为网易自营，品质保证。</div>
         </template>
       </Dialog>
+      <Dialog :options="shopping" v-if="shopping.visible">
+        <template slot="dialogContent" style="position: relative;">
+          <p style="font-size: 20px;">商品名称：
+            <span style="color: #2c3e50; font-weight: bold;">{{proDetail.name}}</span></p>
+          <p style="font-size: 18px;">商品价格：
+            <span style="color: #d7282d; font-weight: bold;">{{proDetail.newprice}}</span></p>
+          <p style="font-size: 18px;">配送地址：{{address}}</p>
+          <div class="proDetail">
+            <span style="margin-right: 10px;">数量</span>
+            <el-input-number v-model="number" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+          </div>
+          <div style="font-size: 20px;margin-top: 20px; background-color: #E6A23C; color: #fff;padding: 10px 20px; width: 60px; text-align: center;position: absolute; right: 0;bottom: 0;cursor: pointer;" @click="pay">支付</div>
+        </template>
+      </Dialog>
+      <Dialog :options="purchasePage" v-if="purchasePage.visible">
+        <template slot="dialogContent">
+          <purchasePage></purchasePage>
+        </template>
+      </Dialog>
     </div>
 </template>
 
 <script>
   import Dialog from '@/components/dialog/Dialog'
   import layoutApi from '@/api/layoutApi'
+  import purchasePage from '@/pages/purchasePage/purchasePage'
     export default {
         name: "productDetails",
         components: {
           Dialog,
+          purchasePage,
         },
         props: [],
         data() {
@@ -144,6 +165,16 @@
                 title: '服务',
                 visible: false,
                 width: '30%',
+              },
+              shopping: {
+                title: '',
+                visible: false,
+                width: '500px',
+              },
+              purchasePage: {
+                title: '',
+                visible: false,
+                width: '500px',
               },
               number: '',//商品数量
               activeName: 'detail',//下部tabs绑定值
@@ -166,7 +197,16 @@
           },
           //选择商品数量
           handleChange(val){
-            console.log(val);
+
+          },
+          //立即购买
+          shoppingNow(){
+            this.shopping.visible = true;
+          },
+          //支付
+          pay(){
+            this.purchasePage.visible = true;
+            this.shopping.visible = false;
           },
           //tabs选择
           tabsChange(tabs,path){
